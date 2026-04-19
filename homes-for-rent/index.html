@@ -1,0 +1,892 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Havenly | Ridge Forest Dr · Stone Mountain Rental Home</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #faf9f7;
+            color: #1e2f32;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+            border-bottom: 1px solid #edece7;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+         .logo {
+            width: 250px;
+            height: 48px;
+            object-fit: cover;
+        }
+
+        .logo span {
+            color: #1e4a6b;
+            background: none;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .login-link {
+            color: #1e3c3f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .login-link i {
+            margin-right: 6px;
+            color: #1e4a6b;
+        }
+
+        .save-favorites-btn {
+            background: #1e3c3f;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .save-favorites-btn:hover {
+            background: #1e4a6b;
+            color: #1e3c3f;
+            transform: translateY(-1px);
+        }
+
+        /* main container */
+        .property-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 40px 64px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            color: #5a6f76;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link i {
+            font-size: 20px;
+        }
+
+        .back-link:hover {
+            color: #1e4a6b;
+        }
+
+        /* two column layout */
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 48px;
+        }
+
+        /* gallery styles */
+        .gallery-main {
+            margin-bottom: 32px;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #efebe4;
+            position: relative;
+        }
+
+        .main-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 66%; /* aspect ratio */
+            overflow: hidden;
+        }
+
+        .main-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .badge-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(30, 60, 63, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            z-index: 2;
+        }
+
+        .image-counter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .thumbnail {
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail.active {
+            border-color: #1e4a6b;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* property info */
+        .property-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+            color: #1e3c3f;
+        }
+
+        .property-address {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c868e;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .price-tag {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1e3c3f;
+            margin-bottom: 6px;
+        }
+
+        .price-tag span {
+            font-size: 16px;
+            font-weight: 500;
+            color: #6f8f98;
+        }
+
+        .fee-note {
+            font-size: 13px;
+            color: #9aaeb9;
+            margin-bottom: 24px;
+        }
+
+        .specs-row {
+            display: flex;
+            gap: 32px;
+            padding: 20px 0;
+            border-top: 1px solid #edece7;
+            border-bottom: 1px solid #edece7;
+            margin-bottom: 28px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .spec-item i {
+            font-size: 20px;
+            color: #1e4a6b;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 32px 0 18px 0;
+            color: #1e3c3f;
+        }
+
+        .description-text {
+            color: #3a5a62;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .amenity-badge {
+            background: #f3f0ea;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e3c3f;
+        }
+
+        /* summary card (sticky) */
+        .summary-card {
+            background: white;
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edece7;
+            position: sticky;
+            top: 110px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #e2ddd4;
+        }
+
+        .total-label {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .total-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3c3f;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .fee-note-small {
+            font-size: 12px;
+            color: #9aaeb9;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #1e3c3f;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 48px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 24px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1e4a6b;
+            color: #b7bcbd;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #1e3c3f;
+            width: 100%;
+            padding: 12px;
+            border-radius: 48px;
+            font-weight: 600;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #eaf0f3;
+        }
+
+        .info-links {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 12px;
+        }
+
+        .info-links a {
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #2b6c6f;
+        }
+
+        /* map & schools */
+        .map-wrapper {
+            border-radius: 28px;
+            overflow: hidden;
+            margin: 40px 0 32px;
+            height: 380px;
+            background: #e9e5dd;
+        }
+
+        .school-item {
+            background: white;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid #edece7;
+            transition: 0.2s;
+        }
+
+        .school-name {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .school-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 13px;
+            color: #5f767e;
+        }
+
+        /* footer */
+        footer {
+            background-color: #0e2629;
+            color: #cfdfe3;
+            border-radius: 40px 40px 0 0;
+            padding: 48px 40px 28px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #bfd4d9;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            font-size: 12px;
+            border-top: 1px solid #2f5559;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 1000px) {
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+            .summary-card {
+                position: relative;
+                top: 0;
+            }
+            .navbar {
+                padding: 16px 24px;
+            }
+            .property-container {
+                padding: 24px 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .property-title {
+                font-size: 26px;
+            }
+            .specs-row {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+        }
+
+        .swipe-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 991px) {
+            .swipe-arrow {
+                display: flex;
+            }
+            .swipe-arrow.prev {
+                left: 12px;
+            }
+            .swipe-arrow.next {
+                right: 12px;
+            }
+            .thumbnail-grid {
+                display: none;
+            }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(255,255,255,0.96);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <img src="/logo21.png" alt="ChadMott Logo" class="logo">
+    <div class="navbar-right">
+        <a href="#" class="login-link"><i class="fas fa-heart"></i> My Favorites</a>
+        <button class="save-favorites-btn"><i class="fas fa-bookmark"></i> Save Favorites</button>
+    </div>
+</nav>
+
+<div class="property-container" id="propertyContainer">
+    <a href="/rental-homes" class="back-link" id="backToSearchBtn"><i class="fas fa-arrow-left"></i> Back to search</a>
+    
+    <div class="property-grid">
+        <!-- left column: gallery + description -->
+        <div>
+            <div class="gallery-main">
+                <div class="main-image-wrapper" id="mainImageWrapper">
+                    <img class="main-image" id="mainImage" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format" alt="Property main view">
+                    <div class="badge-overlay" id="propertyBadge">Move-In Ready</div>
+                    <div class="image-counter" id="imageCounter">1 / 12</div>
+                    <button class="swipe-arrow prev" id="prevImageBtn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="swipe-arrow next" id="nextImageBtn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="thumbnail-grid" id="thumbnailGrid"></div>
+            </div>
+
+            <h1 class="property-title" id="propertyTitle">Ridge Forest Dr Unit A</h1>
+            <div class="property-address"><i class="fas fa-map-pin"></i> <span id="propertyAddress">Stone Mountain, GA</span></div>
+            <div class="price-tag">$1,485<span>/month</span></div>
+            <div class="fee-note" id="feeNote">Plus additional fees (utility management, pet rent, etc.)</div>
+
+            <div class="specs-row">
+                <div class="spec-item"><i class="fas fa-bed"></i> <span id="bedCount">2</span> beds</div>
+                <div class="spec-item"><i class="fas fa-bath"></i> <span id="bathCount">2.5</span> baths</div>
+                <div class="spec-item"><i class="fas fa-arrows-alt"></i> <span id="sqftCount">2,400</span> sqft</div>
+            </div>
+
+            <div class="section-title">Property Description</div>
+            <div class="description-text" id="propertyDescription">
+                Some photos may feature virtual furniture staging. The rental home does not come with any furniture shown. 
+                Please note that the advertised price may exclude additional fees including application fee, admin fee, utility management fee, 
+                and optional services. Get the home you want and the value you deserve with Chad Mott. Pets are welcome.
+            </div>
+
+            <div class="section-title">Amenities & Features</div>
+            <div class="amenities-list" id="amenitiesList">
+                <span class="amenity-badge">Ceiling Fan</span>
+                <span class="amenity-badge">Dishwasher</span>
+                <span class="amenity-badge">Pet Friendly</span>
+                <span class="amenity-badge">Smart Home Ready</span>
+            </div>
+
+            <div class="section-title">Location & Nearby</div>
+            <div class="map-wrapper" id="mapContainer">
+                <iframe width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen loading="lazy"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA6mJRtqZ7dRXHul5eM6bQb3KzFzPyiN2k&q=Stone%20Mountain%2C%20GA">
+                </iframe>
+            </div>
+
+            <div class="section-title">Nearby Schools</div>
+            <div id="schoolsContainer">
+                <!-- dynamic schools will be populated but we have fallback static -->
+                <div class="school-item"><div class="school-name">Action Montessori Academy</div><div class="school-details"><span>0.50 miles</span><span>UG</span></div></div>
+                <div class="school-item"><div class="school-name">Gables Academy</div><div class="school-details"><span>0.65 miles</span><span>7-12</span></div></div>
+                <div class="school-item"><div class="school-name">The Champion Middle Theme School</div><div class="school-details"><span>0.73 miles</span><span>6-8</span></div></div>
+            </div>
+        </div>
+
+        <!-- right column: summary card -->
+        <div>
+            <div class="summary-card">
+                <div class="total-row">
+                    <span class="total-label">Total monthly</span>
+                    <span class="total-price" id="totalPrice">$1,496</span>
+                </div>
+                <div class="fee-row"><span>Base Rent</span><span id="baseRent">$1,485</span></div>
+                <div class="fee-row"><span>Utility Management Fee</span><span>$11</span></div>
+                <div class="fee-note-small" id="feeDetails">Advertised price subject to additional fees. See Rental Fees for details.</div>
+                <button class="btn-primary" id="applyNowBtn"><i class="fas fa-file-signature"></i> Apply now</button>
+                <button class="btn-outline" id="contactUsBtn"><i class="fas fa-envelope"></i> Contact us</button>
+                <div class="info-links">
+                    <a href="#" id="additionalFeesLink">Additional Fees</a>
+                    <a href="#" id="rentalCriteriaLink">Rental Criteria</a>
+                    <a href="#" id="scamAlertLink">Avoid Rental Scams</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col"><h4>Chad Mott</h4><p>Elevating rental experience</p><div><i class="fab fa-instagram"></i> <i class="fab fa-facebook"></i> <i class="fab fa-linkedin"></i></div></div>
+        <div class="footer-col"><h4>Explore</h4><a href="#">Rentals</a><a href="#">Furnished homes</a><a href="#">Short-term</a></div>
+        <div class="footer-col"><h4>Resources</h4><a href="#">Renter’s guide</a><a href="#">FAQ</a><a href="#">Tenant rights</a></div>
+        <div class="footer-col"><h4>Contact</h4><p><i class="fas fa-phone-alt"></i> +1 (218) 478-4036</p><p><i class="fas fa-envelope"></i> home36mgt@gmail.com</p></div>
+    </div>
+    <div class="copyright">&copy; 2025 Chad Mott Real Estate Rentals — Your home, reimagined.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+    // ---------- Supabase configuration ----------
+    const SUPABASE_URL = 'https://agytmnjckheicnvpqxnh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFneXRtbmpja2hlaWNudnBxeG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NjMzMjgsImV4cCI6MjA5MjEzOTMyOH0.RJ0PX6noEHbFRK-CDlTfWZs0hPmvXbtY6hj_1d0tazs';
+    // For demo purpose we will use mock data if supabase not configured, but we respect the original pattern.
+    // To mimic the original file's supabase-config, we create a dummy client and fallback to demo data if needed.
+    let supabaseClient = null;
+    try {
+        if (typeof supabase !== 'undefined') {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+    } catch(e) { console.warn("Supabase not loaded, using demo data"); }
+    
+    // ---------- Helper functions ----------
+    function showLoading() {
+        let loader = document.getElementById('propLoading');
+        if(!loader){
+            loader = document.createElement('div');
+            loader.id = 'propLoading';
+            loader.className = 'loading-overlay';
+            loader.innerHTML = '<div class="spinner-border text-primary mb-3" style="width:3rem;height:3rem;"></div><div class="fw-bold">Loading property details...</div>';
+            document.body.appendChild(loader);
+        }
+        loader.style.display = 'flex';
+    }
+    function hideLoading() {
+        const loader = document.getElementById('propLoading');
+        if(loader) loader.style.display = 'none';
+    }
+    
+    // Mock property data (fallback)
+    const fallbackProperty = {
+        id: "52669102",
+        address: "Ridge Forest Dr Unit A, Stone Mountain, GA",
+        price: 1485,
+        beds: 2,
+        baths: 2.5,
+        sqft: 2400,
+        description: "Some photos may feature virtual furniture staging. The rental home does not come with any furniture shown. Please note that the advertised price may exclude additional fees. Get the home you want and the value you deserve with Havenly. Pets are welcome. Apply soon, homes can go fast!",
+        badge: "Move-In Ready",
+        images: [
+            "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format",
+            "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&auto=format",
+            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&auto=format",
+            "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&auto=format",
+            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&auto=format"
+        ],
+        amenities: ["Ceiling Fan", "Dishwasher", "Pet Friendly", "Smart Home Ready", "Central AC", "Washer/Dryer Hookup"],
+        schools: [
+            { name: "Action Montessori Academy", distance: "0.50 miles", grades: "UG" },
+            { name: "Gables Academy", distance: "0.65 miles", grades: "7-12" },
+            { name: "The Champion Middle Theme School", distance: "0.73 miles", grades: "6-8" }
+        ]
+    };
+
+    let currentImages = [];
+    let currentImageIndex = 0;
+    let propertyData = { ...fallbackProperty };
+    
+    // DOM elements
+    const mainImage = document.getElementById('mainImage');
+    const propertyTitle = document.getElementById('propertyTitle');
+    const propertyAddressSpan = document.getElementById('propertyAddress');
+    const bedCountSpan = document.getElementById('bedCount');
+    const bathCountSpan = document.getElementById('bathCount');
+    const sqftSpan = document.getElementById('sqftCount');
+    const propertyDesc = document.getElementById('propertyDescription');
+    const amenitiesContainer = document.getElementById('amenitiesList');
+    const totalPriceSpan = document.getElementById('totalPrice');
+    const priceTag      = document.querySelector(".price-tag");
+    const baseRentSpan = document.getElementById('baseRent');
+    const badgeSpan = document.getElementById('propertyBadge');
+    const imageCounterSpan = document.getElementById('imageCounter');
+    const thumbnailGrid = document.getElementById('thumbnailGrid');
+    const schoolsContainer = document.getElementById('schoolsContainer');
+    
+    function renderThumbnails(images) {
+        thumbnailGrid.innerHTML = '';
+        images.forEach((img, idx) => {
+            const thumb = document.createElement('div');
+            thumb.className = 'thumbnail' + (idx === currentImageIndex ? ' active' : '');
+            thumb.innerHTML = `<img src="${img}" alt="thumbnail">`;
+            thumb.addEventListener('click', () => {
+                currentImageIndex = idx;
+                mainImage.src = images[currentImageIndex];
+                updateCounter(images.length);
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+            thumbnailGrid.appendChild(thumb);
+        });
+    }
+    
+    function updateCounter(total) {
+        imageCounterSpan.innerText = `${currentImageIndex+1} / ${total}`;
+    }
+    
+    function updateUI(data) {
+        propertyData = data;
+        currentImages = data.images && data.images.length ? data.images : fallbackProperty.images;
+        currentImageIndex = 0;
+        mainImage.src = currentImages[0];
+        updateCounter(currentImages.length);
+        renderThumbnails(currentImages);
+        
+        propertyTitle.innerText = data.address?.split(',')[0] || "Ridge Forest Dr Unit A";
+        propertyAddressSpan.innerText = data.address || "Stone Mountain, GA";
+        let title = document.head.querySelector("title");
+        title.textContent   = `ChadMott | ${data.address || "Ridge Forest Dr Unit A"}`;
+        bedCountSpan.innerText = data.beds || 2;
+        bathCountSpan.innerText = data.baths || 2.5;
+        sqftSpan.innerText = (data.sqft || 2400).toLocaleString();
+        propertyDesc.innerText = data.description || fallbackProperty.description;
+        badgeSpan.innerText = data.badge || "Move-In Ready";
+        const basePrice = data.price || 1485;
+        baseRentSpan.innerText = `$${basePrice.toLocaleString()}`;
+        totalPriceSpan.innerText = `$${(basePrice + 11).toLocaleString()}`;
+        priceTag.innerHTML      = `$${(basePrice + 11).toLocaleString()}<span>/month</span>`;
+        // amenities
+        if(data.amenities && data.amenities.length){
+            amenitiesContainer.innerHTML = data.amenities.map(a => `<span class="amenity-badge">${a}</span>`).join('');
+        } else {
+            amenitiesContainer.innerHTML = fallbackProperty.amenities.map(a => `<span class="amenity-badge">${a}</span>`).join('');
+        }
+        
+        // schools
+        if(data.schools && data.schools.length){
+            schoolsContainer.innerHTML = data.schools.map(s => `
+                <div class="school-item">
+                    <div class="school-name">${s.name}</div>
+                    <div class="school-details"><span>${s.distance}</span><span>${s.grades}</span></div>
+                </div>
+            `).join('');
+        } else {
+            schoolsContainer.innerHTML = fallbackProperty.schools.map(s => `
+                <div class="school-item"><div class="school-name">${s.name}</div><div class="school-details"><span>${s.distance}</span><span>${s.grades}</span></div></div>
+            `).join('');
+        }
+        
+        // update map embed address
+        const mapIframe = document.querySelector('#mapContainer iframe');
+        if(mapIframe && data.address){
+            const encoded = encodeURIComponent(data.address);
+            mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyA6mJRtqZ7dRXHul5eM6bQb3KzFzPyiN2k&q=${encoded}`;
+        }
+    }
+    
+    // load property based on URL param or localStorage
+    async function loadProperty() {
+        showLoading();
+        const urlParams = new URLSearchParams(window.location.search);
+        let propertyId = urlParams.get('propertyId');
+        let randomProperty = null;
+        
+        if (!propertyId && localStorage.getItem('randomProperty')) {
+            try {
+                randomProperty = JSON.parse(localStorage.getItem('randomProperty'));
+                if(randomProperty && randomProperty.id) {
+                    propertyId = randomProperty.id;
+                }
+            } catch(e) {}
+        }
+        
+        if (propertyId && supabaseClient) {
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('properties')
+                    .select('*')
+                    .eq('id', propertyId)
+                    .single();
+                if (!error && data) {
+                    updateUI(data);
+                    hideLoading();
+                    return;
+                }
+                sessionStorage.propertyID = propertyId;
+            } catch(err) { console.warn("supabase error, using fallback"); }
+        }
+        
+        if (randomProperty) {
+            updateUI(randomProperty);
+        } else {
+            updateUI(fallbackProperty);
+        }
+        hideLoading();
+    }
+    
+    // image swipe (mobile)
+    function initMobileSwipe() {
+        const wrapper = document.getElementById('mainImageWrapper');
+        const prevBtn = document.getElementById('prevImageBtn');
+        const nextBtn = document.getElementById('nextImageBtn');
+        
+        function nextImage() {
+            if(currentImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+            mainImage.src = currentImages[currentImageIndex];
+            updateCounter(currentImages.length);
+            if(thumbnailGrid.children[currentImageIndex]) {
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumbnailGrid.children[currentImageIndex]?.classList.add('active');
+            }
+        }
+        function prevImage() {
+            if(currentImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+            mainImage.src = currentImages[currentImageIndex];
+            updateCounter(currentImages.length);
+            if(thumbnailGrid.children[currentImageIndex]) {
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumbnailGrid.children[currentImageIndex]?.classList.add('active');
+            }
+        }
+        if(prevBtn) prevBtn.addEventListener('click', prevImage);
+        if(nextBtn) nextBtn.addEventListener('click', nextImage);
+        
+        let touchStartX = 0;
+        wrapper.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        wrapper.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if(Math.abs(diff) > 40) {
+                if(diff > 0) nextImage();
+                else prevImage();
+            }
+        });
+    }
+    
+    // event listeners for buttons
+    document.getElementById('applyNowBtn')?.addEventListener('click', () => {
+        //alert("✨ Start your application: our leasing team will contact you within 24 hours.");
+        sessionStorage.randomProperty = localStorage.randomProperty;
+        location.href = "/form";  // for real integration
+    });
+    document.getElementById('contactUsBtn')?.addEventListener('click', () => {
+        //alert("📧 Contact our support at home36mgt@gmail.com or call +1 (218) 478-4036");
+        location.href = "mailto:home36mgt@gmail.com"
+    });
+    document.getElementById('backToSearchBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.history.back();
+    });
+    document.getElementById('additionalFeesLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("📄 Additional fees: application fee $55, admin fee $75, monthly utility management $11, optional pet rent, etc.");
+    });
+    document.getElementById('rentalCriteriaLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("📋 Rental criteria: income 3x rent, clean background check, and rental history verification.");
+    });
+    document.getElementById('scamAlertLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("⚠️ Avoid scams: never wire money, always tour in person or via official virtual tours, and verify listings through Havenly directly.");
+    });
+    
+    // Load property when ready
+    window.addEventListener('DOMContentLoaded', () => {
+        loadProperty();
+        initMobileSwipe();
+    });
+</script>
+</body>
+</html><!--Chad Mott
+2184784036
+home36mgt@gmail.com
+-->
