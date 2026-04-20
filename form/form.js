@@ -565,7 +565,7 @@ function collectFormData() {
   
   const formData = new FormData(form);
   const data = {
-    adminEmail: ""
+    adminEmail: "myrentalservice0@gmail.com"//863-210-1212
   };
   
   for (const [key, value] of formData.entries()) {
