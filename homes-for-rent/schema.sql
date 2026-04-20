@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS properties (
   description TEXT,
   amenities JSONB DEFAULT '[]'::jsonb,
   images JSONB DEFAULT '[]'::jsonb,
+  schools JSONB DEFAULT '[]'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
