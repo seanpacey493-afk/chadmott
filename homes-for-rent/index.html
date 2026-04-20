@@ -787,7 +787,6 @@
                 }
             } catch(e) {}
         }
-        alert(propertyId);
         if (propertyId && supabaseClient) {
 
             try {
@@ -797,7 +796,6 @@
                     .eq('id', propertyId)
                     .single();
                 if (!error && data) {
-                    alert("yesss")
                     updateUI(data);
                     hideLoading();
                     return;
