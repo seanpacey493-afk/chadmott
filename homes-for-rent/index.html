@@ -624,16 +624,17 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js"></script>
 <script>
     // ---------- Supabase configuration ----------
-    const SUPABASE_URL = 'https://agytmnjckheicnvpqxnh.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFneXRtbmpja2hlaWNudnBxeG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NjMzMjgsImV4cCI6MjA5MjEzOTMyOH0.RJ0PX6noEHbFRK-CDlTfWZs0hPmvXbtY6hj_1d0tazs';
+    //const SUPABASE_URL = 'https://agytmnjckheicnvpqxnh.supabase.co';
+    //const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFneXRtbmpja2hlaWNudnBxeG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NjMzMjgsImV4cCI6MjA5MjEzOTMyOH0.RJ0PX6noEHbFRK-CDlTfWZs0hPmvXbtY6hj_1d0tazs';
     // For demo purpose we will use mock data if supabase not configured, but we respect the original pattern.
     // To mimic the original file's supabase-config, we create a dummy client and fallback to demo data if needed.
     let supabaseClient = null;
     try {
         if (typeof supabase !== 'undefined') {
-            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseClient = supabase;
         }
     } catch(e) { console.warn("Supabase not loaded, using demo data"); }
     
@@ -786,7 +787,7 @@
                 }
             } catch(e) {}
         }
-        
+        alert(propertyId);
         if (propertyId && supabaseClient) {
 
             try {
@@ -796,10 +797,12 @@
                     .eq('id', propertyId)
                     .single();
                 if (!error && data) {
+                    alert("yesss")
                     updateUI(data);
                     hideLoading();
                     return;
                 }
+                console.log(data,error)
                 sessionStorage.propertyID = propertyId;
             } catch(err) { console.warn("supabase error, using fallback"); }
         }
